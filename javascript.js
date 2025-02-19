@@ -3,15 +3,23 @@ function createPlayer(name, symbol) {
     const getScore = () => score;
     const addToScore = () => score++;
     return {name, symbol, getScore, addToScore}
-}
+};
 
 function ticTacToeBoard() {
     let board = [[null, null, null],[null, null, null],[null, null, null]];
 
     function addSymbol(coord, symbol) {
-        board[coord[0]][coord[1]] = symbol;
-    }
+        if (!null) {
+            board[coord[0]][coord[1]] = symbol;
+        };
+    };
     return {addSymbol, board}
+};
+
+function checkBoardState(board) {
+    const boardDiag1 = [board[0][0], board[1][1], board[2][2]];
+    const boardDiag2 = [board[0][2], board[1][1], board[2][0]];
+    const boardArray=[board[0], board[1], board[2], board.map(x => x[0]), board.map(x=>x[1]), board.map(x=>x[2]), boardDiag1, boardDiag2]
 }
 
 const tim = createPlayer("tim", "o");
