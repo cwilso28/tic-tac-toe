@@ -13,7 +13,7 @@ function ticTacToeBoard() {
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < cols; j++) {
-            board[i].push[Cell()];
+            board[i].push(Cell());
         }
     }
 
@@ -38,13 +38,23 @@ function ticTacToeBoard() {
     return {addSymbol, board}
 };
 
+function Cell() {
+    let value = 0;
+
+    const setValue = (player) => value = player;
+    
+    const getValue = () => value;
+
+    return {setValue, getValue}
+}
+
 function checkBoardState(board) {
     const boardDiag1 = [board[0][0], board[1][1], board[2][2]];
     const boardDiag2 = [board[0][2], board[1][1], board[2][0]];
     const boardArray=[board[0], board[1], board[2], board.map(x => x[0]), board.map(x=>x[1]), board.map(x=>x[2]), boardDiag1, boardDiag2]
 }
 
-const tim = createPlayer("tim", "o");
+const tim = Player("tim", "o");
 tim.addToScore();
 
 console.log({playerName: tim.name, score: tim.getScore()})
