@@ -23,6 +23,10 @@ function ticTacToeBoard() {
         };
     };
 
+    function viewBoard() {
+        console.log(board)
+    }
+
     function checkForMatch(array) {
         const arrayIsTheSame = array.every(x => x === array[0])
         return arrayIsTheSame;
@@ -35,7 +39,7 @@ function ticTacToeBoard() {
         const boardArray=[board[0], board[1], board[2], board.map(x => x[0]), board.map(x=>x[1]), board.map(x=>x[2]), boardDiag1, boardDiag2];
         
     }
-    return {addSymbol, board}
+    return {addSymbol, viewBoard}
 };
 
 function Cell() {
