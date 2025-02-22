@@ -17,29 +17,46 @@ function ticTacToeBoard() {
         }
     }
 
-    function addSymbol(coord, symbol) {
-        if (!null) {
-            board[coord[0]][coord[1]] = symbol;
-        };
+    function placeMarker(row, column, player) {
+        if (board[row][column].getValue() != 0) {
+            return;
+        }
+        else {
+            board[row][column].setValue(player)
+        }
     };
 
     function viewBoard() {
-        console.log(board)
+        const boardWithValues = board.map((row) => row.map((cell) => cell.getValue()))
+        console.log(boardWithValues)
     }
 
     function checkForMatch(array) {
-        const arrayIsTheSame = array.every(x => x === array[0])
-        return arrayIsTheSame;
-    }
+        if (!array.map((element) => element.getValue()).includes(0)) {
+            const arrayIsTheSame = array.every((element) => element.getValue() === array[0].getValue());
+            return arrayIsTheSame;
+        };
+    };
 
-    function checkBoardState(board) {
+    function checkBoardState() {
         // Isolate locations to check for wins
         const boardDiag1 = [board[0][0], board[1][1], board[2][2]];
         const boardDiag2 = [board[0][2], board[1][1], board[2][0]];
-        const boardArray=[board[0], board[1], board[2], board.map(x => x[0]), board.map(x=>x[1]), board.map(x=>x[2]), boardDiag1, boardDiag2];
+        const boardArray=[board[0], board[1], board[2], board.map((x) => x[0]), board.map((x)=>x[1]), board.map((x)=>x[2]), boardDiag1, boardDiag2];
         
+        let boardState = boardArray.map(checkForMatch);
+
+        let winIndex = boardState.indexOf(true);
+
+        if (winIndex >= 0) {
+            console.log(`Win condition found at position: ${winIndex}`)
+        }
+
+        else {
+            console.log(`No win condition found`)
+        }
     }
-    return {addSymbol, viewBoard}
+    return {placeMarker, viewBoard, checkBoardState}
 };
 
 function Cell() {
@@ -52,13 +69,32 @@ function Cell() {
     return {setValue, getValue}
 }
 
-function checkBoardState(board) {
-    const boardDiag1 = [board[0][0], board[1][1], board[2][2]];
-    const boardDiag2 = [board[0][2], board[1][1], board[2][0]];
-    const boardArray=[board[0], board[1], board[2], board.map(x => x[0]), board.map(x=>x[1]), board.map(x=>x[2]), boardDiag1, boardDiag2]
+
+
+// Tests to verify the code works
+// Verify values are placed correctly
+const row = 3;
+const col = 3;
+// let index = 1;
+// testBoard = ticTacToeBoard();
+
+
+// for (let i = 0; i < 3; i++) {
+//     for (let j=0; j <3; j++) {
+//         testBoard.placeMarker(i, j, index);
+//         index++;        
+//     }
+// }
+
+// testBoard.viewBoard()
+
+// Verify that win conditions are found
+winConditionBoard = ticTacToeBoard();
+
+// Column 1 test
+for (let i = 0; i < row; i++) {
+    winConditionBoard.placeMarker(i,i,1);
+    winConditionBoard.checkBoardState();
 }
 
-const tim = Player("tim", "o");
-tim.addToScore();
-
-console.log({playerName: tim.name, score: tim.getScore()})
+winConditionBoard.viewBoard()
