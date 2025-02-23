@@ -1,9 +1,9 @@
-function Player(name, symbol) {
-    let score = 0;
-    const getScore = () => score;
-    const addToScore = () => score++;
-    return {name, symbol, getScore, addToScore}
-};
+// function Player(name, symbol) {
+//     let score = 0;
+//     const getScore = () => score;
+//     const addToScore = () => score++;
+//     return {name, symbol, getScore, addToScore}
+// };
 
 function ticTacToeBoard() {
     const rows = 3;
@@ -49,11 +49,11 @@ function ticTacToeBoard() {
         let winIndex = boardState.indexOf(true);
 
         if (winIndex >= 0) {
-            console.log(`Win condition found at position: ${winIndex}`)
+            return 1;
         }
 
         else {
-            console.log(`No win condition found`)
+            return 0;
         }
     }
     return {placeMarker, viewBoard, checkBoardState}
@@ -67,12 +67,36 @@ function Cell() {
     const getValue = () => value;
 
     return {setValue, getValue}
-}
+};
 
+function gameController() {
+    let board;
+    
+    const player1 = 1;
+    const player2 = 2;
 
+    let currentPlayer = player1;
 
-// Tests to verify the code works
-// Verify values are placed correctly
+    const switchPlayer = () => currentPlayer === player1 ? currentPlayer = player2 : currentPlayer = player1;
+
+    function startNewGame () {
+        board = ticTacToeBoard();
+        board.viewBoard();
+    }
+
+    function playRound(row, column) {
+        // console.log(currentPlayer);
+        board.placeMarker(row, column, currentPlayer);
+        console.log(board.checkBoardState());
+        board.viewBoard();
+        switchPlayer()
+    }
+
+    return {startNewGame,playRound}
+};
+
+// *** Tests to verify the code works ***
+// *** Verify values are placed correctly ***
 const row = 3;
 const col = 3;
 // let index = 1;
@@ -88,13 +112,17 @@ const col = 3;
 
 // testBoard.viewBoard()
 
-// Verify that win conditions are found
+// *** Verify that win conditions are found ***
 winConditionBoard = ticTacToeBoard();
 
-// Column 1 test
-for (let i = 0; i < row; i++) {
-    winConditionBoard.placeMarker(i,i,1);
-    winConditionBoard.checkBoardState();
-}
+// *** Column 1 test ***
+// for (let i = 0; i < row; i++) {
+//     winConditionBoard.placeMarker(i,i,1);
+//     winConditionBoard.checkBoardState();
+// }
 
-winConditionBoard.viewBoard()
+// winConditionBoard.viewBoard()
+
+// *** Test the game controller functionality ***
+const game = gameController();
+game.startNewGame();
