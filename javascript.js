@@ -10,10 +10,14 @@ function ticTacToeBoard() {
     const cols = 3;
     const board = [];
 
+    let gameContainer = document.getElementById("game-container");
+
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < cols; j++) {
-            board[i].push(Cell());
+            let cell = Cell(i, j);
+            board[i].push(cell);
+            gameContainer.appendChild(cell.createButton())
         }
     }
 
@@ -27,8 +31,8 @@ function ticTacToeBoard() {
     };
 
     function viewBoard() {
-        const boardWithValues = board.map((row) => row.map((cell) => cell.getValue()))
-        console.log(boardWithValues)
+        const boardWithValues = board.map((row) => row.map((cell) => cell.updateButton()))
+        // console.log(boardWithValues)
     }
 
     function checkForMatch(array) {
@@ -56,22 +60,42 @@ function ticTacToeBoard() {
             return 0;
         }
     }
+
     return {placeMarker, viewBoard, checkBoardState}
 };
 
-function Cell() {
+function Cell(row, column) {
+    this.row = row;
+    this.column = column;
+
     let value = 0;
 
     const setValue = (player) => value = player;
     
     const getValue = () => value;
 
-    return {setValue, getValue}
+    let button;
+
+    function createButton() {
+        button = document.createElement("button");
+        button.type = "button";
+        button.id = "board-button"
+        button.textContent = value;
+        button.setAttribute("row", row);
+        button.setAttribute("column", column);
+        return button;
+    }
+
+    const updateButton = () => button.textContent = value;
+
+    return {setValue, getValue, createButton, updateButton}
 };
 
 function gameController() {
     let board;
     let round = 0;
+
+    let gameContainer = document.getElementById("game-container");
     
     const player1 = 1;
     const player2 = 2;
@@ -81,6 +105,7 @@ function gameController() {
     const switchPlayer = () => currentPlayer === player1 ? currentPlayer = player2 : currentPlayer = player1;
 
     function startNewGame() {
+        gameContainer.textContent='';
         board = ticTacToeBoard();
         round = 0;
         board.viewBoard();
@@ -89,6 +114,9 @@ function gameController() {
 
     function playRound(row, column) {
         // console.log(currentPlayer);
+        let header = document.querySelector("h1");
+        header.textContent = `Player ${1}, it's your turn!`;
+
         board.placeMarker(row, column, currentPlayer);
         board.viewBoard();
         let boardState = board.checkBoardState();
@@ -109,8 +137,25 @@ function gameController() {
         
     }
 
+    function buttonClick(e) {
+        if (e.target && e.target.matches("#board-button")) {
+            const selectedButton = e.target;
+            const row = Number(selectedButton.getAttribute("row"));
+            const column = Number(selectedButton.getAttribute("column"));
+
+            playRound(row, column);
+        }
+    }
+    
+    gameContainer.addEventListener("click", function(e) {
+        buttonClick(e);
+    });
+
     return {startNewGame,playRound}
 };
+
+
+
 
 // *** Tests to verify the code works ***
 // *** Verify values are placed correctly ***
@@ -130,7 +175,7 @@ const col = 3;
 // testBoard.viewBoard()
 
 // *** Verify that win conditions are found ***
-winConditionBoard = ticTacToeBoard();
+// winConditionBoard = ticTacToeBoard();
 
 // *** Column 1 test ***
 // for (let i = 0; i < row; i++) {
@@ -145,16 +190,16 @@ const game = gameController();
 game.startNewGame();
 
 // *** Check if the correct response is generated in the event of a draw or win ***
-gameDraw = [[0,0], [1,1], [0, 1], [0,2],[2,0],[1,0], [1,2], [2, 1], [2, 2]];
+// gameDraw = [[0,0], [1,1], [0, 1], [0,2],[2,0],[1,0], [1,2], [2, 1], [2, 2]];
 
-p1Win = [[0,2], [1,1], [0,1],[2,2],[0,0]];
+// p1Win = [[0,2], [1,1], [0,1],[2,2],[0,0]];
 
-p2Win = [[0,0],[0,1],[0,2],[1,1],[2,2],[2,1]];
+// p2Win = [[0,0],[0,1],[0,2],[1,1],[2,2],[2,1]];
 
-function playGame(array) {
-    for (let i = 0; i<array.length; i++) {
-        game.playRound(array[i][0], array[i][1]);
-    }
-};
+// function playGame(array) {
+//     for (let i = 0; i<array.length; i++) {
+//         game.playRound(array[i][0], array[i][1]);
+//     }
+// };
 
-playGame(p2Win)
+// playGame(p2Win)
