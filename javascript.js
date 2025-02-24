@@ -71,6 +71,7 @@ function Cell() {
 
 function gameController() {
     let board;
+    let round = 0;
     
     const player1 = 1;
     const player2 = 2;
@@ -79,17 +80,33 @@ function gameController() {
 
     const switchPlayer = () => currentPlayer === player1 ? currentPlayer = player2 : currentPlayer = player1;
 
-    function startNewGame () {
+    function startNewGame() {
         board = ticTacToeBoard();
+        round = 0;
         board.viewBoard();
+        currentPlayer = player1;
     }
 
     function playRound(row, column) {
         // console.log(currentPlayer);
         board.placeMarker(row, column, currentPlayer);
-        console.log(board.checkBoardState());
         board.viewBoard();
-        switchPlayer()
+        let boardState = board.checkBoardState();
+        if (boardState === 1) {
+            console.log(`Player ${currentPlayer} wins!`);
+            startNewGame();
+        }
+
+        else if ((boardState === 0) & (round === 8)) {
+            console.log('Draw');
+            startNewGame();
+        }
+
+        else {
+            round++;
+            switchPlayer();
+        }
+        
     }
 
     return {startNewGame,playRound}
@@ -126,3 +143,18 @@ winConditionBoard = ticTacToeBoard();
 // *** Test the game controller functionality ***
 const game = gameController();
 game.startNewGame();
+
+// *** Check if the correct response is generated in the event of a draw or win ***
+gameDraw = [[0,0], [1,1], [0, 1], [0,2],[2,0],[1,0], [1,2], [2, 1], [2, 2]];
+
+p1Win = [[0,2], [1,1], [0,1],[2,2],[0,0]];
+
+p2Win = [[0,0],[0,1],[0,2],[1,1],[2,2],[2,1]];
+
+function playGame(array) {
+    for (let i = 0; i<array.length; i++) {
+        game.playRound(array[i][0], array[i][1]);
+    }
+};
+
+playGame(p2Win)
