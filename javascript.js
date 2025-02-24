@@ -96,6 +96,7 @@ function gameController() {
     let round = 0;
 
     let gameContainer = document.getElementById("game-container");
+    let header = document.querySelector("h1");
     
     const player1 = 1;
     const player2 = 2;
@@ -110,13 +111,10 @@ function gameController() {
         round = 0;
         board.viewBoard();
         currentPlayer = player1;
+        header.textContent = `Player ${currentPlayer}, it's your turn!`;
     }
 
     function playRound(row, column) {
-        // console.log(currentPlayer);
-        let header = document.querySelector("h1");
-        header.textContent = `Player ${1}, it's your turn!`;
-
         board.placeMarker(row, column, currentPlayer);
         board.viewBoard();
         let boardState = board.checkBoardState();
@@ -133,6 +131,7 @@ function gameController() {
         else {
             round++;
             switchPlayer();
+            header.textContent = `Player ${currentPlayer}, it's your turn!`;
         }
         
     }
