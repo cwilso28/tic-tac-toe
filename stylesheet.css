@@ -38,4 +38,23 @@ h2 {
 #controls-container {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
+}
+
+#reset-button {
+  background-color: rgb(102, 15, 15);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  font-size: 25px;
+}
+
+#reset-button:hover {
+  background-color: rgb(83, 13, 13);
+}
+
+#reset-button:active {
+  background-color: rgb(56, 9, 9);
 }
