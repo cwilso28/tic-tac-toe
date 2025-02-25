@@ -77,10 +77,12 @@ function Cell(row, column) {
     const xImg = document.createElement("img");
     xImg.src = "resources/x-symbol-svgrepo-com.svg";
     xImg.alt = "X marker"
+    xImg.draggable = false;
 
     const oImg = document.createElement("img");
     oImg.src = "resources/circle-svgrepo-com.svg";
-    oImg.alt = "O marker"
+    oImg.alt = "O marker";
+    oImg.draggable = false;
 
     let button;
 
@@ -109,6 +111,8 @@ function gameController() {
 
     let gameContainer = document.getElementById("game-container");
     let header = document.querySelector("h1");
+    let endGameStatus = document.querySelector("h2");
+    let controlsContainer = document.getElementById("controls-container")
     
     const player1 = 1;
     const player2 = 2;
@@ -131,13 +135,13 @@ function gameController() {
         board.viewBoard();
         let boardState = board.checkBoardState();
         if (boardState === 1) {
-            console.log(`Player ${currentPlayer} wins!`);
-            startNewGame();
+            endGameStatus.textContent = `Player ${currentPlayer} wins!`;
+            // startNewGame();
         }
 
         else if ((boardState === 0) & (round === 8)) {
-            console.log('Draw');
-            startNewGame();
+            endGameStatus.textContent = `Draw!`;
+            // startNewGame();
         }
 
         else {
@@ -158,12 +162,25 @@ function gameController() {
             selectedButton.disabled = true;
         }
     }
+
+    function resetGame(e) {
+        if (e.target && e.target.matches('#reset-button')) {
+            endGameStatus.textContent = '';
+            startNewGame();
+        }
+    }
     
+    controlsContainer.addEventListener("click", function(e) {
+        resetGame(e);
+    })
+
     gameContainer.addEventListener("click", function(e) {
         buttonClick(e);
     });
 
     return {startNewGame,playRound}
+
+    
 };
 
 
