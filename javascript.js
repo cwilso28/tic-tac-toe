@@ -74,19 +74,31 @@ function Cell(row, column) {
     
     const getValue = () => value;
 
+    const xImg = document.createElement("img");
+    xImg.src = "resources/x-symbol-svgrepo-com.svg";
+    xImg.alt = "X marker"
+
+    const oImg = document.createElement("img");
+    oImg.src = "resources/circle-svgrepo-com.svg";
+    oImg.alt = "O marker"
+
     let button;
 
     function createButton() {
         button = document.createElement("button");
         button.type = "button";
         button.id = "board-button"
-        button.textContent = value;
+        // button.textContent = value;
         button.setAttribute("row", row);
         button.setAttribute("column", column);
         return button;
     }
 
-    const updateButton = () => button.textContent = value;
+    const updateButton = () => {
+        symbols = ['',xImg, oImg];
+        // console.log(symbols[value-1])
+        button.append(symbols[value]);
+    }
 
     return {setValue, getValue, createButton, updateButton}
 };
