@@ -25,3 +25,7 @@ button {
 #board-button:nth-child(-n+6) {
   border-bottom: 4px solid black;
 }
+
+h1 {
+  text-align: center;
+}
