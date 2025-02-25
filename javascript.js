@@ -143,6 +143,7 @@ function gameController() {
             const column = Number(selectedButton.getAttribute("column"));
 
             playRound(row, column);
+            selectedButton.disabled = true;
         }
     }
     
@@ -154,12 +155,14 @@ function gameController() {
 };
 
 
+const game = gameController();
+game.startNewGame();
 
 
 // *** Tests to verify the code works ***
 // *** Verify values are placed correctly ***
-const row = 3;
-const col = 3;
+// const row = 3;
+// const col = 3;
 // let index = 1;
 // testBoard = ticTacToeBoard();
 
@@ -185,8 +188,6 @@ const col = 3;
 // winConditionBoard.viewBoard()
 
 // *** Test the game controller functionality ***
-const game = gameController();
-game.startNewGame();
 
 // *** Check if the correct response is generated in the event of a draw or win ***
 // gameDraw = [[0,0], [1,1], [0, 1], [0,2],[2,0],[1,0], [1,2], [2, 1], [2, 2]];
