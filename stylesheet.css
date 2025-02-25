@@ -1,3 +1,27 @@
 * {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  /* box-sizing: border-box; */
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  border: none;
+}
+
+#game-container {
+  display: grid;
+  grid-template-columns: repeat(3, 150px);
+  grid-template-rows: repeat(3, 150px);
+  /* gap: 3px; */
+  justify-content: center;
+}
+
+#board-button:nth-child(3n+1),
+#board-button:nth-child(3n+2) {
+  border-right: 4px solid black;
+}
+
+#board-button:nth-child(-n+6) {
+  border-bottom: 4px solid black;
 }
