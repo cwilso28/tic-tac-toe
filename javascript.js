@@ -110,6 +110,7 @@ function gameController() {
     let round = 0;
 
     let gameContainer = document.getElementById("game-container");
+    // let boardButtons = gameContainer.querySelectorAll("button");
     let header = document.querySelector("h1");
     let endGameStatus = document.querySelector("h2");
     let controlsContainer = document.getElementById("controls-container")
@@ -134,8 +135,10 @@ function gameController() {
         board.placeMarker(row, column, currentPlayer);
         board.viewBoard();
         let boardState = board.checkBoardState();
+        let boardButtons = gameContainer.querySelectorAll("button");
         if (boardState === 1) {
             endGameStatus.textContent = `Player ${currentPlayer} wins!`;
+            boardButtons.forEach((button) => button.disabled = true);
             // startNewGame();
         }
 
