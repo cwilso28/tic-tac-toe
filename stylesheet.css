@@ -26,6 +26,16 @@ button {
   border-bottom: 4px solid black;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
+}
+
+h2 {
+  height: 30px;
+}
+
+#controls-container {
+  display: flex;
+  justify-content: center;
 }
