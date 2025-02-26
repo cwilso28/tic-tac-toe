@@ -35,13 +35,20 @@ h2 {
   height: 30px;
 }
 
-#controls-container {
+#controls-container,
+#player1-container,
+#player2-container{
   display: flex;
   justify-content: center;
   margin-top: 10px;
 }
 
-#reset-button {
+#controls-container {
+  gap: 5px;
+}
+
+#reset-button,
+#submit-button {
   background-color: rgb(102, 15, 15);
   color: white;
   border: none;
@@ -57,4 +64,21 @@ h2 {
 
 #reset-button:active {
   background-color: rgb(56, 9, 9);
+}
+
+#submit-button {
+  background-color: rgb(4, 122, 4);
+}
+
+#submit-button:hover {
+  background-color: rgb(5, 107, 5);
+}
+
+#submit-button:active {
+  background-color: rgb(3, 63, 3);
+}
+
+
+label {
+  margin-right: 4px;
 }
