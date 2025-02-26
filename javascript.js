@@ -1,17 +1,19 @@
-// function Player(name, symbol) {
-//     let score = 0;
-//     const getScore = () => score;
-//     const addToScore = () => score++;
-//     return {name, symbol, getScore, addToScore}
-// };
+function Player(name, value) {
+    let score = 0;
+    const getScore = () => score;
+    const addToScore = () => score++;
+    return {name, value, getScore, addToScore}
+};
 
 function ticTacToeBoard() {
+    // Set up initial parameters for the board
     const rows = 3;
     const cols = 3;
     const board = [];
 
     let gameContainer = document.getElementById("game-container");
 
+    // Generate array used to store the values of the board. The Cell object will help control the values in the board.
     for (let i = 0; i < rows; i++) {
         board[i] = [];
         for (let j = 0; j < cols; j++) {
@@ -21,6 +23,7 @@ function ticTacToeBoard() {
         }
     }
 
+    // This function controls the value that goes into the cell in the grid, so long as the value is zero.
     function placeMarker(row, column, player) {
         if (board[row][column].getValue() != 0) {
             return;
@@ -30,11 +33,13 @@ function ticTacToeBoard() {
         }
     };
 
+    // This displays the board in the console or on the webpage
     function viewBoard() {
         const boardWithValues = board.map((row) => row.map((cell) => cell.updateButton()))
         // console.log(boardWithValues)
     }
 
+    // This checks if an array contains all the same values
     function checkForMatch(array) {
         if (!array.map((element) => element.getValue()).includes(0)) {
             const arrayIsTheSame = array.every((element) => element.getValue() === array[0].getValue());
@@ -42,6 +47,7 @@ function ticTacToeBoard() {
         };
     };
 
+    // This checks all of the winning array configurations for matching values within those arrays. It passes a true value if a value is found
     function checkBoardState() {
         // Isolate locations to check for wins
         const boardDiag1 = [board[0][0], board[1][1], board[2][2]];
@@ -110,13 +116,21 @@ function gameController() {
     let round = 0;
 
     let gameContainer = document.getElementById("game-container");
-    // let boardButtons = gameContainer.querySelectorAll("button");
     let header = document.querySelector("h1");
     let endGameStatus = document.querySelector("h2");
-    let controlsContainer = document.getElementById("controls-container")
+    let resetButton = document.getElementById("reset-button");
+    let submitButton = document.getElementById("submit-button")
+    let player1_name = document.getElementById("player1");
+    let player2_name = document.getElementById("player2");
     
-    const player1 = 1;
-    const player2 = 2;
+    const default1 = "Player 1";
+    const default2 = "Player 2";
+
+    player1_name.value = default1;
+    player2_name.value = default2;
+    
+    const player1 = Player(player1_name.value,1);
+    const player2 = Player(player2_name.value,2);
 
     let currentPlayer = player1;
 
@@ -128,16 +142,16 @@ function gameController() {
         round = 0;
         board.viewBoard();
         currentPlayer = player1;
-        header.textContent = `Player ${currentPlayer}, it's your turn!`;
+        header.textContent = `${currentPlayer.name}, it's your turn!`;
     }
 
     function playRound(row, column) {
-        board.placeMarker(row, column, currentPlayer);
+        board.placeMarker(row, column, currentPlayer.value);
         board.viewBoard();
         let boardState = board.checkBoardState();
         let boardButtons = gameContainer.querySelectorAll("button");
         if (boardState === 1) {
-            endGameStatus.textContent = `Player ${currentPlayer} wins!`;
+            endGameStatus.textContent = `${currentPlayer.name} wins!`;
             boardButtons.forEach((button) => button.disabled = true);
             // startNewGame();
         }
@@ -150,7 +164,7 @@ function gameController() {
         else {
             round++;
             switchPlayer();
-            header.textContent = `Player ${currentPlayer}, it's your turn!`;
+            header.textContent = `${currentPlayer.name}, it's your turn!`;
         }
         
     }
@@ -168,13 +182,30 @@ function gameController() {
 
     function resetGame(e) {
         if (e.target && e.target.matches('#reset-button')) {
+            player1.name = default1;
+            player2.name = default2;
+            player1_name.value = default1;
+            player2_name.value = default2;
             endGameStatus.textContent = '';
             startNewGame();
         }
     }
+
+    function submitNames(e) {
+        if (e.target && e.target.matches('#submit-button')) {
+            player1.name = document.getElementById("player1").value
+            player2.name = document.getElementById("player2").value
+            startNewGame();
+        }
+    }
     
-    controlsContainer.addEventListener("click", function(e) {
+    resetButton.addEventListener("click", function(e) {
         resetGame(e);
+    })
+
+    submitButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        submitNames(e);
     })
 
     gameContainer.addEventListener("click", function(e) {
