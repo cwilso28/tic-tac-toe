@@ -48,7 +48,7 @@ h2 {
 }
 
 #reset-button,
-#submit-button {
+#submit-button{
   background-color: rgb(102, 15, 15);
   color: white;
   border: none;
@@ -67,6 +67,7 @@ h2 {
 }
 
 #submit-button {
+  width: 250px;
   background-color: rgb(4, 122, 4);
 }
 
