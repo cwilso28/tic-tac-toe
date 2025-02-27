@@ -43,12 +43,15 @@ h2 {
   margin-top: 10px;
 }
 
-#controls-container {
+#controls-container,
+#player1-container,
+#player2-container {
   gap: 5px;
 }
 
 #reset-button,
-#submit-button{
+#submit-button,
+#play-again-button{
   background-color: rgb(102, 15, 15);
   color: white;
   border: none;
@@ -67,7 +70,6 @@ h2 {
 }
 
 #submit-button {
-  width: 250px;
   background-color: rgb(4, 122, 4);
 }
 
@@ -79,7 +81,21 @@ h2 {
   background-color: rgb(3, 63, 3);
 }
 
-
-label {
-  margin-right: 4px;
+#play-again-button {
+  width: 150px;
+  background-color: rgb(28, 132, 146);
 }
+
+#play-again-button:hover {
+  width: 150px;
+  background-color: rgb(20, 95, 105);
+}
+
+#play-again-button:active {
+  width: 150px;
+  background-color: rgb(14, 69, 77);
+}
+
+/* label {
+  margin-right: 4px;
+} */
