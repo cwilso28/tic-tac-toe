@@ -2,7 +2,8 @@ function Player(name, value) {
     let score = 0;
     const getScore = () => score;
     const addToScore = () => score++;
-    return {name, value, getScore, addToScore}
+    const resetScore = () => score = 0;
+    return {name, value, getScore, addToScore, resetScore}
 };
 
 function ticTacToeBoard() {
@@ -119,18 +120,27 @@ function gameController() {
     let header = document.querySelector("h1");
     let endGameStatus = document.querySelector("h2");
     let resetButton = document.getElementById("reset-button");
-    let submitButton = document.getElementById("submit-button")
+    let submitButton = document.getElementById("submit-button");
+    let playAgainButton = document.getElementById("play-again-button");
+
     let player1_name = document.getElementById("player1");
     let player2_name = document.getElementById("player2");
+
+    let player1_score = document.getElementById("player1-score");
+    let player2_score = document.getElementById("player2-score");
     
     const default1 = "Player 1";
     const default2 = "Player 2";
 
     player1_name.value = default1;
     player2_name.value = default2;
-    
+
+       
     const player1 = Player(player1_name.value,1);
     const player2 = Player(player2_name.value,2);
+
+    player1_score.textContent = player1.getScore();
+    player2_score.textContent = player2.getScore();
 
     let currentPlayer = player1;
 
@@ -153,6 +163,9 @@ function gameController() {
         if (boardState === 1) {
             endGameStatus.textContent = `${currentPlayer.name} wins!`;
             boardButtons.forEach((button) => button.disabled = true);
+            currentPlayer.addToScore();
+            player1_score.textContent = player1.getScore();
+            player2_score.textContent = player2.getScore();
             // startNewGame();
         }
 
@@ -184,9 +197,17 @@ function gameController() {
         if (e.target && e.target.matches('#reset-button')) {
             player1.name = default1;
             player2.name = default2;
+
             player1_name.value = default1;
             player2_name.value = default2;
+
             endGameStatus.textContent = '';
+
+            player1.resetScore();
+            player2.resetScore();
+
+            player1_score.textContent = player1.getScore();
+            player2_score.textContent = player2.getScore();
             startNewGame();
         }
     }
@@ -195,6 +216,19 @@ function gameController() {
         if (e.target && e.target.matches('#submit-button')) {
             player1.name = document.getElementById("player1").value
             player2.name = document.getElementById("player2").value
+
+            player1.resetScore();
+            player2.resetScore();
+
+            player1_score.textContent = player1.getScore();
+            player2_score.textContent = player2.getScore();
+
+            startNewGame();
+        }
+    }
+
+    function newGame(e) {
+        if (e.target && e.target.matches('#play-again-button')) {
             startNewGame();
         }
     }
@@ -211,6 +245,10 @@ function gameController() {
     gameContainer.addEventListener("click", function(e) {
         buttonClick(e);
     });
+
+    playAgainButton.addEventListener("click", function(e) {
+        newGame(e);
+    })
 
     return {startNewGame,playRound}
 
