@@ -132,12 +132,12 @@ function gameController() {
     const default1 = "Player 1";
     const default2 = "Player 2";
 
-    player1_name.value = default1;
-    player2_name.value = default2;
+    // player1_name.value = default1;
+    // player2_name.value = default2;
 
        
-    const player1 = Player(player1_name.value,1);
-    const player2 = Player(player2_name.value,2);
+    const player1 = Player(default1,1);
+    const player2 = Player(default2,2);
 
     player1_score.textContent = player1.getScore();
     player2_score.textContent = player2.getScore();
@@ -198,8 +198,8 @@ function gameController() {
             player1.name = default1;
             player2.name = default2;
 
-            player1_name.value = default1;
-            player2_name.value = default2;
+            // player1_name.value = default1;
+            // player2_name.value = default2;
 
             endGameStatus.textContent = '';
 
