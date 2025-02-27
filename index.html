@@ -15,14 +15,17 @@
   <form action="" method="get" id="form-container">
     <div id="player1-container">
       <label for="player1">Player 1</label>
-      <input type="text" id = "player1" name="player1"/>
+      <input type="text" id = "player1" name="player1" placeholder="Player 1"/>
+      <div id="player1-score"></div>
     </div>
     <div id="player2-container">
       <label for="player2">Player 2</label>
-      <input type="text" id="player2" name="player2"/>
+      <input type="text" id="player2" name="player2" placeholder="Player 2"/>
+      <div id="player2-score"></div>
     </div>
     <div id="controls-container">
-      <button type="submit" id="submit-button">Submit/Next Game</button>
+      <button type="submit" id="submit-button">Submit</button>
+      <button type="button" id="play-again-button">Play Again</button>
       <button type="button" id="reset-button">Reset</button>
     </div>
   </form>
